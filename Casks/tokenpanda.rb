@@ -1,6 +1,6 @@
 cask "tokenpanda" do
-  version "0.1.8"
-  sha256 "75e3742eea44978aaca89caf5b2e47137760c51be5bbbc1088e5315384c4d732"
+  version "0.1.9"
+  sha256 "07ceb905c4e272c729d9b7745f3b02ee56e74e1001fcaab47bd402e06210a3f3"
 
   url "https://github.com/tokenpandadev/tokenpanda-app/releases/download/v#{version}/tokenpanda-#{version}.zip"
   name "tokenpanda"
@@ -13,17 +13,28 @@ cask "tokenpanda" do
 
   uninstall quit: "dev.tokenpanda.app"
 
-  zap trash: [
-    "~/Library/Application Support/dev.tokenpanda.app",
-    "~/Library/Preferences/dev.tokenpanda.app.plist",
-  ]
+  # The app's own Remove runs first, in zap only: uninstall directives also run on every upgrade and would strip
+  # the status line entry each time. It is remove.sh, which the app writes into its data folder at Install and
+  # Remove, not the app binary: Homebrew before 7.0.10 deletes the app before it runs a zap script. The script
+  # lives until the trash step below. It is the same Remove as `tokenpanda --remove-status-line`, in sh and plutil.
+  zap script: {
+        executable:   "/bin/sh",
+        args:         ["-c", '[ ! -f "$0" ] || /bin/sh "$0"',
+                       File.expand_path("~/Library/Application Support/dev.tokenpanda.app/remove.sh")],
+        must_succeed: false,
+      },
+      trash:  [
+        "~/Library/Application Support/dev.tokenpanda.app",
+        "~/Library/Preferences/dev.tokenpanda.app.plist",
+      ]
 
   caveats <<~EOS
     The app is signed ad hoc, not notarised. On first launch macOS blocks it:
     open System Settings, Privacy & Security, and click Open Anyway.
 
-    Before you uninstall, open tokenpanda's Settings tab and click
-    "Remove the status line entry", so ~/.claude/settings.json gets its
-    previous statusLine back.
+    brew uninstall --zap removes the status line entry and puts back the one
+    you had before, once tokenpanda 0.1.9 or later has run at least once.
+    With a plain brew uninstall, first open tokenpanda's Settings tab and
+    click "Remove the status line entry".
   EOS
 end

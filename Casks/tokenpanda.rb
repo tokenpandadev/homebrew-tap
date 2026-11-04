@@ -1,6 +1,6 @@
 cask "tokenpanda" do
-  version "0.1.14"
-  sha256 "bb6f4a0d9703642178cd76102853c37180e569ddbb39b7a5b1044dc7ead2656b"
+  version "0.1.15"
+  sha256 "e5c48b03d427712252547afb522e79f0d173e85e34e6e580438773ddd8ba3159"
 
   url "https://github.com/tokenpandadev/tokenpanda-app/releases/download/v#{version}/tokenpanda-#{version}.zip"
   name "tokenpanda"

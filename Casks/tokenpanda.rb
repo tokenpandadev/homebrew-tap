@@ -1,12 +1,13 @@
 cask "tokenpanda" do
-  version "0.1.13"
-  sha256 "aed89cf936cd32c2ea3f4115dbcacc065758b28ece05e97b97f77258866d79b0"
+  version "0.1.14"
+  sha256 "bb6f4a0d9703642178cd76102853c37180e569ddbb39b7a5b1044dc7ead2656b"
 
   url "https://github.com/tokenpandadev/tokenpanda-app/releases/download/v#{version}/tokenpanda-#{version}.zip"
   name "tokenpanda"
   desc "Menu bar pace for Claude Code plan windows, and the Mac's own figures"
   homepage "https://tokenpanda.dev"
 
+  depends_on arch: :arm64
   depends_on macos: :sonoma
 
   app "tokenpanda.app"

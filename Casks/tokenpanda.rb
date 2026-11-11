@@ -5,7 +5,7 @@
 # tokenpanda-<version>.zip.sha256 that .github/workflows/release.yml attaches to the draft (the zip CI built).
 cask "tokenpanda" do
   version "0.1.19"
-  sha256 "RELEASE_SHA256"
+  sha256 "3135f81ec777d598306c92ddcf5ecf24274731f58d73d791227825431eb5c1ea"
 
   url "https://github.com/tokenpandadev/tokenpanda-app/releases/download/v#{version}/tokenpanda-#{version}.zip"
   name "tokenpanda"
